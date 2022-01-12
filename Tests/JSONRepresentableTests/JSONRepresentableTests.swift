@@ -9,10 +9,18 @@ import XCTestExtensions
 @testable import JSONRepresentable
 
 final class JSONRepresentableTests: XCTestCase {
-    func testExample() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct
-        // results.
-        XCTAssertEqual(JSONRepresentable().text, "Hello, World!")
+    func testJSONTypes() {
+        let array: JSONArray = [1]
+        let dictionary: JSONDictionary = ["foo": "bar"]
+
+        let tests: [Any] = ["test", 123, 123.456, true, array, dictionary]
+        for item in tests {
+            XCTAssertTrue(item is JSONType)
+        }
+    }
+    
+    func testDates() {
+        let converted = Date().asJSONType
+        XCTAssertTrue(converted is String)
     }
 }
