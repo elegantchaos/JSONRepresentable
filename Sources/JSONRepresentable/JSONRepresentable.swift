@@ -83,3 +83,22 @@ extension NSDate: JSONRepresentable {
         return DateFormatter.localizedString(from: self as Date, dateStyle: .full, timeStyle: .full)
     }
 }
+
+extension NSNumber: JSONRepresentable {
+    public var asJSONType: JSONType {
+        let c = Character(Unicode.Scalar(Int(self.objCType.pointee))!)
+        switch c {
+            case "q": return self.intValue
+            case "d": return self.doubleValue
+            default:
+                print(c)
+                return self.doubleValue
+        }
+    }
+}
+
+extension NSNull: JSONRepresentable {
+    public var asJSONType: JSONType {
+        return "nil"
+    }
+}
